@@ -7,7 +7,7 @@ Flamenco
 
 A GPU position-based dynamics (PBD) cloth simulation sufficiently fast and robust for use in games. Our take on this well-studied problem is an amalgam of some of the industry's best PBD cloth methods, some dating back as far as 2003, some recently communicated in GDC 2018, all mixed and ported to the GPU. By parallelizing these methods on the GPU, we achieve frame rates far higher than their CPU-based counterparts, and easily satisfy the game industry's 60 fps standard.
 
-### Links
+### Build Instructions and Links
 
 This repository is a placeholder for the Project. You can track this progress by going to (any of the following links):
 
@@ -58,13 +58,38 @@ The PBD algorithm is typically evaluated on the CPU using a Gauss-Seidel type so
 Our cloth model includes four distinct geometric constraints intended to approximate real cloth behavior: distance, isometric bending, long-range attachments, and anchor constraints. We briefly describe each of these here.
 
 ##### Distance
+
+The most primitive of geometric constraints, distance-based constraints restore mesh edges that extend or compress relative to their rest lengths.
+
 ##### Isometric Bending
-##### Long-Range Attachments
+
+The isometric bending constraint restores winged edges to their rest configurations, and is best used with inextensible cloth materials.
+
 ##### Anchors
 
-#### Environmental Collisions
+We set the mass of vertices we wish to use as anchor points to infinity. Hence, anchor point weights w = 1 / m are zero, implying that anchor positions are unaffected by constraints.
+
+##### Long-Range Attachments
+
+We include this additional distance-based constraint because it helps enforce inextensibility when the cloth model includes anchors.
+
+#### Environment Collisions
+
+Environment collisions are currently restricted to SDF-based models for the sphere and plane. The self-collision method described below naturally extends to all point-triangle collisions that might occur in the scene, but SDFs simplify the evaluation of core cloth physics.
+
+##### Sphere
+
+Every vertex position is checked to make sure it is outside the radius of the sphere centered at some origin. If not, the vertex is pushed out in the direction parallel to the vector connecting the vertex's pre-projected position and the sphere's center.
+
+##### Plane 
+
+Every vertex position is checked to make sure it remains on the same side of the plane it was on in the previous time step. If not, the vertex is pushed back in the direction normal to the plane.
 
 #### Mesh Definition
+
+Mesh behavior is a function of the constraints applied to the mesh, and these in turn are a function of the mesh's topology. We observe behavioral differences depending on the choice of mesh discretization. We demonstrate two such discretization's below:
+
+
 
 #### Spatial Hashing with Predictive Constraints for Self-Collisions
 
