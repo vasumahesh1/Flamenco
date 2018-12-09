@@ -27,9 +27,40 @@ This will download all the necessary config / logging / shaders / textures etc. 
 
 #### PBD Algorithm
 
+We write the core PBD algorithm here for convenience:
+
+```
+ALGORITHM Position Based Dyanmics:
+  for all vertices i do
+    initialize x_i, vi, wi = 1/mi 
+  end for
+  loop
+    for all vertices i do vi = vi + wi * dt * f_ext
+    for all vertices i do pi = xi + dt * vi
+    for all vertices i do genCollConstraints(xi, pi)
+    loop solverIterations times
+      projectConstraints()
+    end loop
+    for all vertices i do
+      vi = (pi - xi) / dt
+      xi = pi
+    end for
+  end loop
+END.
+```
+
 #### GPU-Based PBD Solver
 
+The PBD algorithm is typically evaluated on the CPU using a Gauss-Seidel type solver, which works exclusively in a serial fashion. Porting the PBD algorithm therefore requires a different approach. Researchers typically choose one of two methods - A Jacobi iterative solver or a graph coloring algorithm. The graph coloring method identifies independent sets of vertices (those not linked by constraint functions) then solves the constraints associated with each of these sets in a serial fashion using the Gauss-Seidel method. While this method guarantees convergence, it limits vertex/constraint throughput on the GPU and is still inherently serial. The Jacobi method, on the other hand, maximizes parallelism but does not guarantee convergence without the following adjustment to the PBD algorithm: the change in position is computed for each vertex i for all constraints that apply to i in parallel. The final correction applied to i, however, is the average of these adjustments.
+
 #### Geometric Constraints
+
+Our cloth model includes four distinct geometric constraints intended to approximate real cloth behavior: distance, isometric bending, long-range attachments, and anchor constraints. We briefly describe each of these here.
+
+##### Distance
+##### Isometric Bending
+##### Long-Range Attachments
+##### Anchors
 
 #### Environmental Collisions
 
