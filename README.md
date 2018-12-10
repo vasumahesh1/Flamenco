@@ -15,7 +15,6 @@ This repository is a placeholder for the Project. You can track this progress by
 
 - [GPU Cloth Sim Issue Tracker: Issue #47](https://github.com/vasumahesh1/azura/issues/47)
 - [CPU Cloth Sim Issue Tracker: Issue #46](https://github.com/vasumahesh1/azura/issues/46)
-- [Main Docs (Will be updated when complete)](https://vasumahesh1.github.io/azura_docs/)
 
 The issue tracker has screenshots reporting progress. All commits related to them are tagged as "Issue #XYZ" format.
 
