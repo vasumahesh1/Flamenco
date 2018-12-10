@@ -88,6 +88,9 @@ Every vertex position is checked to make sure it is outside the radius of the sp
 
 Every vertex position is checked to make sure it remains on the same side of the plane it was on in the previous time step. If not, the vertex is pushed back in the direction normal to the plane.
 
+![gif](gifs/cloth_collision.gif)  
+*Plane and Sphere SDF Cloth Collisions*
+
 #### Mesh Definition
 
 Mesh behavior is a function of the constraints applied to the mesh, and these in turn are a function of the mesh's topology. We observe behavioral differences depending on the choice of mesh discretization. We demonstrate two such discretization's below:
@@ -100,7 +103,7 @@ On the left, we've specified a topology that divides the mesh such that every in
 
 To implement naive self-collision constraint generation, every vertex must be checked against every triangle in the mesh. We accelerate this process by using an adaptive spatial hash grid to bin mesh vertices before constraint projection. We then compute the axis-aligned bounding box encapsulating each triangle and its projected displacement. Then, following Chris Lewin's prescription for predictive constraints (introduced at GDC 2018, see links below), we generate all self-collision constraints for the cloth. Predictive constraints guarantee that cloth vertices never pass through the mesh and are computationally expedient.
 
-![gif](gifs/default_twist_30x30_(0.8-0.7-0.3).gif)
+![gif](gifs/default_twist_30x30_(0.8-0.7-0.3).gif)  
 *Predictive Constraints Resolve Self-Collisions*
 
 ### Implementation
@@ -171,7 +174,16 @@ Including basic distance and bending constraints, we managed CPU frame rates upw
 
 ### Additional Features
 
+#### GLTF 2.0 Mesh Support
+
 Flamenco currently supports GLTF 2.0 mesh loading. However, GLTF meshes do not currently work with cloth self-collisions turned on. We are currently working to enable this feature.
+
+![gif](gifs/custom_cloth_mesh_1.gif)  
+*Flamenco Supports GLTF 2.0 Mesh Loading*
+
+#### Meme Generator
+
+We've added a toggleable meme generator. Results are shown below.
 
 ### References
 
@@ -180,7 +192,6 @@ Flamenco currently supports GLTF 2.0 mesh loading. However, GLTF meshes do not c
 3. Marco Fratarcangeli and Fabio Pellacini, [A GPU-Based Implementation of Position Based Dynamics for Interactive Deformable Bodies](http://publications.lib.chalmers.se/records/fulltext/219708/local_219708.pdf)
 4. Matthias Müller, Bruno Heidelberger, Marcus Hennix, and John Ratcliff, [Position Based Dynamics](http://matthias-mueller-fischer.ch/publications/posBasedDyn.pdf)
 5. Matthias Teschner, Bruno Heidelberger, Matthias Müller, Danat Pomeranets, and Markus Gross, [Optimized Spatial Hashing for Collision Detection of Deformable Objects](http://matthias-mueller-fischer.ch/publications/tetraederCollision.pdf)
-
 
 ### Made by:
 
