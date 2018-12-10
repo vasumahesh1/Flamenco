@@ -3,7 +3,7 @@ Flamenco
 
 ### Description
 
-A GPU position-based dynamics (PBD) cloth simulation sufficiently fast and robust for use in games. Our take on this well-studied problem is an amalgam of some of the industry's best PBD cloth methods, some dating back as far as 2003, some recently communicated in GDC 2018, all mixed and ported to the GPU. By parallelizing these methods on the GPU, we achieve frame rates far higher than their CPU-based counterparts, and easily satisfy the game industry's 60 fps standard.
+Flamenco is a GPU position-based dynamics (PBD) cloth simulation sufficiently fast and robust for use in games. Our take on this well-studied problem is an amalgam of some of the industry's best PBD cloth methods, some dating back as far as 2003, some recently communicated in GDC 2018, all mixed and ported to the GPU. By parallelizing these methods on the GPU, we achieve frame rates far higher than their CPU-based counterparts, and easily satisfy the game industry's 60 fps standard.
 
 ![gif](gifs/default_cloth_30x30_(0.8-0.7-0.3).gif)
 
@@ -100,6 +100,9 @@ On the left, we've specified a topology that divides the mesh such that every in
 
 To implement naive self-collision constraint generation, every vertex must be checked against every triangle in the mesh. We accelerate this process by using an adaptive spatial hash grid to bin mesh vertices before constraint projection. We then compute the axis-aligned bounding box encapsulating each triangle and its projected displacement. Then, following Chris Lewin's prescription for predictive constraints (introduced at GDC 2018, see links below), we generate all self-collision constraints for the cloth. Predictive constraints guarantee that cloth vertices never pass through the mesh and are computationally expedient.
 
+![gif](gifs/default_twist_30x30_(0.8-0.7-0.3).gif)
+*Predictive Constraints Resolve Self-Collisions*
+
 ### Implementation
 
 This project was written for an engine being developed by one of the authors (see links above). This engine builds to D3D12 and Vulkan for rendering, but for this particular project we restrict ourselves to the D3D12 build. To implement the above methodologies, we include the following shader passes:
@@ -165,6 +168,10 @@ Including basic distance and bending constraints, we managed CPU frame rates upw
 #### Self-Collision Constraint Prediction vs Hash Cell Grid Resolution
 
 [Graph]
+
+### Additional Features
+
+Flamenco currently supports GLTF 2.0 mesh loading. However, GLTF meshes do not currently work with cloth self-collisions turned on. We are currently working to enable this feature.
 
 ### References
 
