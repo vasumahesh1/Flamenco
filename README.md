@@ -1,11 +1,11 @@
 Flamenco
 =========
 
-[Main Image]
-
 ### Description
 
 A GPU position-based dynamics (PBD) cloth simulation sufficiently fast and robust for use in games. Our take on this well-studied problem is an amalgam of some of the industry's best PBD cloth methods, some dating back as far as 2003, some recently communicated in GDC 2018, all mixed and ported to the GPU. By parallelizing these methods on the GPU, we achieve frame rates far higher than their CPU-based counterparts, and easily satisfy the game industry's 60 fps standard.
+
+![gif](gifs/default_cloth_30x30_(0.8-0.7-0.3).gif)
 
 ### Build Instructions and Links
 
@@ -102,14 +102,68 @@ To implement naive self-collision constraint generation, every vertex must be ch
 This project was written for an engine being developed by one of the authors (see links above). This engine builds to D3D12 and Vulkan for rendering, but for this particular project we restrict ourselves to the D3D12 build. To implement the above methodologies, we include the following shader passes:
 
 #### Compute Vertex Projected Positions
+
+After updating particle velocites with any external forces, we update vertex positions: pi = xi + dt * vi in parallel.
+
 #### Binning Initialization
+
+This pass empties each hash grid cell of all previously stored vertices.
+
 #### Vertex Binning
+
+Here, all cloth vertices are binned into their appropriate hash grid cells.
+
 #### Generate Self-Collision Constraints
+
+We calculate the axis-aligned bounding box encapsulating each triangle and its projected displaced location and check all hash grid cells this box intersects. We then compare the projected positions of vertices binned in these cells with the barycentric-interpolated time-projected position of this vertex's spatially-projected position on the triangle in consideration. If these predictive measurements indicate a collision, a predictive constraint is generated using a normal triangle-point collision constraint that is evaluated in the triangle-point pair's pre-projected frame.
+
 #### Apply Vertex Constraints
+
+Here, all constraints are evaluated in parallel, including the self-collision constraints generated in the previous step, distance constraints, long-range attachment constraints, and bending constraints.
+
 #### Apply Deltas
+
+We keep track of the total displacement of each vertex as well as the number of constraints that have affected each vertex. We then average these displacements by dividing by the number of constraints affecting each vertex. This is essential process in a Jacobi-style solver. Finally, we resolve all SDF environment collisions here.
+
 #### Compute Vertex Positions
+
+Vertex positions and velocities are updated in parallel here as per the PBD algorithm.
+
+NOTE: Apply Vertex Constraints, Apply Deltas, and Compute Vertex Positions are repeated over multiple passes in sequence as per the iterative Jacobi-style parallel solver algorithm.
+
 #### Mesh Normals
+
+This shader computes mesh normals for lighting and normal maps.
+
 #### Shading Pass
+
+Finally, the mesh is rendered as per the D3D12 API.
+
+#### Frame Timing Breakdown
+
+[Graph]
+
+### Performance
+
+All timing studies were perfomed using the following software/hardware:
+
+OS: Windows 10
+
+CPU: i7-6700HQ @ 2.60GHz 32GB
+
+GPU: NVIDIA RTX
+
+#### CPU vs GPU 
+
+Including basic distance and bending constraints, we managed CPU frame rates upwards of 20 FPS. For a cloth model of equal complexity, we observe frame rates upwards of 400 FPS.
+
+#### Mesh Resolution vs Compute Time
+
+[Graph]
+
+#### Self-Collision Constraint Prediction vs Hash Cell Grid Resolution
+
+[Graph]
 
 ### References
 
