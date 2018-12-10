@@ -178,6 +178,8 @@ OS: Windows 10
 CPU: i7 4790K  
 GPU: NVIDIA RTX 2080
 
+![](images/Data.PNG)
+
 #### CPU vs GPU 
 
 Including basic distance and bending constraints, we managed CPU frame rates upwards of 20 FPS. For a cloth model of equal complexity, we observe frame rates upwards of 400 FPS.
