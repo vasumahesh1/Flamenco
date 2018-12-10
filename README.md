@@ -1,6 +1,14 @@
 Flamenco
 =========
 
+* Vasu Mahesh
+  * [LinkedIn](http://linkedin.com/in/vasumahesh)
+  * [Code Blog](http://www.codeplaysleep.com)
+
+* Zach Corse
+  * [LinkedIn](https://www.linkedin.com/in/wzcorse/)
+  * [Personal Website](https://wzcorse.com)
+
 ### Description
 
 Flamenco is a GPU position-based dynamics (PBD) cloth simulation sufficiently fast and robust for use in games. Our take on this well-studied problem is an amalgam of some of the industry's best PBD cloth methods, some dating back as far as 2003, some recently communicated in GDC 2018, all mixed and ported to the GPU. By parallelizing these methods on the GPU, we achieve frame rates far higher than their CPU-based counterparts, and easily satisfy the game industry's 60 fps standard.
@@ -251,13 +259,3 @@ We've added a toggleable meme generator. Results are shown below.
 3. Marco Fratarcangeli and Fabio Pellacini, [A GPU-Based Implementation of Position Based Dynamics for Interactive Deformable Bodies](http://publications.lib.chalmers.se/records/fulltext/219708/local_219708.pdf)
 4. Matthias Müller, Bruno Heidelberger, Marcus Hennix, and John Ratcliff, [Position Based Dynamics](http://matthias-mueller-fischer.ch/publications/posBasedDyn.pdf)
 5. Matthias Teschner, Bruno Heidelberger, Matthias Müller, Danat Pomeranets, and Markus Gross, [Optimized Spatial Hashing for Collision Detection of Deformable Objects](http://matthias-mueller-fischer.ch/publications/tetraederCollision.pdf)
-
-### Made by:
-
-* Vasu Mahesh
-  * [LinkedIn](http://linkedin.com/in/vasumahesh)
-  * [Code Blog](http://www.codeplaysleep.com)
-
-* Zach Corse
-  * [LinkedIn](https://www.linkedin.com/in/wzcorse/)
-  * [Personal Website](https://wzcorse.com)
