@@ -115,6 +115,8 @@ On the left, we've specified a topology that divides the mesh such that every in
 
 To implement naive self-collision constraint generation, every vertex must be checked against every triangle in the mesh. We accelerate this process by using an adaptive spatial hash grid to bin mesh vertices before constraint projection. We then compute the axis-aligned bounding box encapsulating each triangle and its projected displacement. Then, following Chris Lewin's prescription for predictive constraints (introduced at GDC 2018, see links below), we generate all self-collision constraints for the cloth. Predictive constraints guarantee that cloth vertices never pass through the mesh and are computationally expedient.
 
+<img src="images/spatial_grid.JPG" alt="Modified Spatial Hash Grid" width="500"/>
+
 ![gif](gifs/default_twist_30x30_(0.8-0.7-0.3).gif)  
 *Predictive Constraints Resolve Self-Collisions*
 
@@ -164,11 +166,9 @@ Finally, the mesh is rendered as per the D3D12 API.
 
 #### Frame Timing Breakdown
 
-[Graph]
-
+<img src="graphs/compute_time_bar.png" alt="Compute Time Breakdown" width="400"/> <img src="graphs/percent_breakdown.png" alt="Compute Percentage Breakdown" width="400"/>
 
 ----------------
-
 
 ### Performance
 
@@ -186,11 +186,7 @@ Including basic distance and bending constraints, we managed CPU frame rates upw
 
 #### Mesh Resolution vs Compute Time
 
-[Graph]
-
-#### Self-Collision Constraint Prediction vs Hash Cell Grid Resolution
-
-[Graph]
+![](graphs/compute_time_line.png)
 
 ----------------
 
@@ -209,8 +205,6 @@ Our Constraints also work on custom meshes. We also built a vertex aliasing tech
 | ---- | ---- |
 | Distance Constraint = 0.9 | Distance Constraint = 0.6 |
 | Bending Constraint = 0.6 | Bending Constraint = 0.1 |
-
-
 
 #### Rendering Pipeline using PBR Shading
 
