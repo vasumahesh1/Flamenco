@@ -73,6 +73,9 @@ We set the mass of vertices we wish to use as anchor points to infinity. Hence, 
 
 We include this additional distance-based constraint because it helps enforce inextensibility when the cloth model includes anchors.
 
+![gif](gifs/default_curtain_70x40_(0.8-0.7-0.3).gif)
+*A Shower Curtain Using Anchors and Long-Range Attachments*
+
 #### Environment Collisions
 
 Environment collisions are currently restricted to SDF-based models for the sphere and plane. The self-collision method described below naturally extends to all point-triangle collisions that might occur in the scene, but SDFs simplify the evaluation of core cloth physics.
@@ -147,11 +150,9 @@ Finally, the mesh is rendered as per the D3D12 API.
 
 All timing studies were perfomed using the following software/hardware:
 
-OS: Windows 10
-
-CPU: i7-6700HQ @ 2.60GHz 32GB
-
-GPU: NVIDIA RTX
+OS: Windows 10  
+CPU: i7 4790K  
+GPU: NVIDIA RTX 2080
 
 #### CPU vs GPU 
 
