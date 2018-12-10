@@ -222,6 +222,7 @@ Our Constraints also work on custom meshes. We also built a vertex aliasing tech
 
 We've added a toggleable meme generator. Results are shown below.
 
+![gif](gifs/default_shehzan_35x40_(0.8-0.7-0.3).gif)
 
 ----------------
 
