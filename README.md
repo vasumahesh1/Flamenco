@@ -29,7 +29,7 @@ If this link is old, you can try out the latest build on Azura and check for the
 
 [Latest Azura Build](https://ci.appveyor.com/project/vasumahesh1/azura)
 
-These links will download all the necessary config / logging / shaders / textures etc. to run the application, all as one zip.
+These links will download all the necessary config / logging / shaders / textures etc. to run the application, all as one zip. Also, these executables are running at 120 FPS, so your VSync must be off. We were able to achieve around 480 FPS as well, but we locked it at 120 FPS such that older hardware can run them as well with the same weights / configs needed for the simulation.
 
 ----------------
 
