@@ -186,7 +186,7 @@ Our Constraints also work on custom meshes. We also built a vertex aliasing tech
 | ![gif](gifs/custom_cloth_mesh_0_9-0_6.gif) | ![gif](gifs/custom_cloth_mesh_0_6-0_1.gif) |
 | ---- | ---- |
 | Distance Constraint = 0.9 | Distance Constraint = 0.6 |
-| Bending Constraint = 0.6 | Distance Constraint = 0.1 |
+| Bending Constraint = 0.6 | Bending Constraint = 0.1 |
 
 #### Meme Generator
 
