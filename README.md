@@ -7,13 +7,6 @@ Flamenco is a GPU position-based dynamics (PBD) cloth simulation sufficiently fa
 
 ![gif](gifs/default_cloth_30x30_(0.8-0.7-0.3).gif)
 
-[Cloth Sim Executable Build #241 (http://bit.ly/azura_cloth_build_241)](http://bit.ly/azura_cloth_build_241)
-
-
-If this link is old, you can try out the latest build on Azura and check for the `WIN64_RELEASE` tag and download the `3_ClothSim` zipped executable.
-
-[Latest Azura Build](https://ci.appveyor.com/project/vasumahesh1/azura)
-
 ----------------
 
 ### Build Instructions and Links
@@ -29,7 +22,14 @@ This project builds online as we commit to it. The latest build can be run and i
 
 [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/github/vasumahesh1/azura)](https://ci.appveyor.com/project/vasumahesh1/azura)
 
-This will download all the necessary config / logging / shaders / textures etc. to run the application, all as one zip.
+**Build #241:**
+[Cloth Sim Executable Build #241 (http://bit.ly/azura_cloth_build_241)](http://bit.ly/azura_cloth_build_241)
+
+If this link is old, you can try out the latest build on Azura and check for the `WIN64_RELEASE` tag and download the `3_ClothSim` zipped executable.
+
+[Latest Azura Build](https://ci.appveyor.com/project/vasumahesh1/azura)
+
+These links will download all the necessary config / logging / shaders / textures etc. to run the application, all as one zip.
 
 ----------------
 
