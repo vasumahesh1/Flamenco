@@ -181,17 +181,32 @@ OS: Windows 10
 CPU: i7 4790K  
 GPU: NVIDIA RTX 2080
 
+All compute passes launch with 512 threads per block. We do not use shared memory in any of our compute shaders.
+
 ![](images/Data.PNG)
 
 #### CPU vs GPU 
 
-Including basic distance and bending constraints, we managed CPU frame rates upwards of 20 FPS. For a cloth model of equal complexity, we observe frame rates upwards of 400 FPS.
+Including basic distance and bending constraints, we managed CPU frame rates upwards of 20 FPS. For a cloth model of equal complexity, we observe frame rates upwards of 400 FPS. We observed a compute-only framerate of 480 FPS for a 200x200 resolution cloth.
+
+#### Total Compute Time vs Total Constraints Solved
+
+As expected, total compute time increases with the total number of constraints solved, which increase with higher mesh resolutions.
+
+![](graphs/total_constraints_time.png)
 
 #### Mesh Resolution vs Compute Time
 
 As noted previously, compute time increases exponentially with increased mesh resolutions (lower is better).
 
 ![](graphs/compute_time_line.png)
+
+#### Spatial Hash Grid Acceleration
+
+Here we show compute time acceleration as a function of hash grid resolution. As noted above, self-collisions are the most computationally expensive pass in the compute pipeline. A tuned (optimized resolution) hash grid can speedup the total compute time by as much as 4x the total compute time without one.
+
+![](graphs/grid_resolutions.png)  
+*All timing values computed for a 200x200 cloth*
 
 ----------------
 
