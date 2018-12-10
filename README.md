@@ -181,6 +181,13 @@ Flamenco currently supports GLTF 2.0 mesh loading. However, GLTF meshes do not c
 ![gif](gifs/custom_cloth_mesh_1.gif)  
 *Flamenco Supports GLTF 2.0 Mesh Loading*
 
+Our Constraints also work on custom meshes. We also built a vertex aliasing technique that prevents duplicate vertices from being simulated by the core PBD algorithm.
+
+| ![gif](gifs/custom_cloth_mesh_0_9-0_6.gif) | ![gif](gifs/custom_cloth_mesh_0_6-0_1.gif) |
+| ---- | ---- |
+| Distance Constraint = 0.9 | Distance Constraint = 0.6 |
+| Bending Constraint = 0.6 | Distance Constraint = 0.1 |
+
 #### Meme Generator
 
 We've added a toggleable meme generator. Results are shown below.
