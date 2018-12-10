@@ -89,13 +89,27 @@ Every vertex position is checked to make sure it remains on the same side of the
 
 Mesh behavior is a function of the constraints applied to the mesh, and these in turn are a function of the mesh's topology. We observe behavioral differences depending on the choice of mesh discretization. We demonstrate two such discretization's below:
 
+<img src="images/meshCenterTopology.JPG" alt="Center Topology" width="300"/> <img src="images/meshDefaultTopology.JPG" alt="Default Topology" width="273"/>
 
+On the left, we've specified a topology that divides the mesh such that every interior vertex is defined by the joining of four or eight identical triangles that meet isotropically in x and y. This topology guarantees more symmetric behavior. On the other hand, most default meshes will be topologized as on the right. Here, we can see that vertices are defined by the joining of six triangles, but these are biased along a particular diagonal direction. This mesh topology satisfies distance-based constraints more easily, but is biased in its evaluation of bending constraints.
 
 #### Spatial Hashing with Predictive Constraints for Self-Collisions
 
+To implement naive self-collision constraint generation, every vertex must be checked against every triangle in the mesh. We accelerate this process by using an adaptive spatial hash grid to bin mesh vertices before constraint projection. We then compute the axis-aligned bounding box encapsulating each triangle and its projected displacement. Then, following Chris Lewin's prescription for predictive constraints (introduced at GDC 2018, see links below), we generate all self-collision constraints for the cloth. Predictive constraints guarantee that cloth vertices never pass through the mesh and are computationally expedient.
+
 ### Implementation
 
-This project was written for an engine being developed by one of the authors (see links above). This engine builds to D3D12 and Vulkan for rendering, but for this particular project we restrict ourselves to the D3D12 build.
+This project was written for an engine being developed by one of the authors (see links above). This engine builds to D3D12 and Vulkan for rendering, but for this particular project we restrict ourselves to the D3D12 build. To implement the above methodologies, we include the following shader passes:
+
+#### Compute Vertex Projected Positions
+#### Binning Initialization
+#### Vertex Binning
+#### Generate Self-Collision Constraints
+#### Apply Vertex Constraints
+#### Apply Deltas
+#### Compute Vertex Positions
+#### Mesh Normals
+#### Shading Pass
 
 ### References
 
