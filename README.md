@@ -7,6 +7,8 @@ Flamenco is a GPU position-based dynamics (PBD) cloth simulation sufficiently fa
 
 ![gif](gifs/default_cloth_30x30_(0.8-0.7-0.3).gif)
 
+----------------
+
 ### Build Instructions and Links
 
 This repository is a placeholder for the Project. You can track this progress by going to (any of the following links):
@@ -22,6 +24,8 @@ This project builds online as we commit to it. The latest build can be run and i
 [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/github/vasumahesh1/azura)](https://ci.appveyor.com/project/vasumahesh1/azura)
 
 This will download all the necessary config / logging / shaders / textures etc. to run the application, all as one zip.
+
+----------------
 
 ### Methodology
 
@@ -106,6 +110,8 @@ To implement naive self-collision constraint generation, every vertex must be ch
 ![gif](gifs/default_twist_30x30_(0.8-0.7-0.3).gif)  
 *Predictive Constraints Resolve Self-Collisions*
 
+----------------
+
 ### Implementation
 
 This project was written for an engine being developed by one of the authors (see links above). This engine builds to D3D12 and Vulkan for rendering, but for this particular project we restrict ourselves to the D3D12 build. To implement the above methodologies, we include the following shader passes:
@@ -152,6 +158,10 @@ Finally, the mesh is rendered as per the D3D12 API.
 
 [Graph]
 
+
+----------------
+
+
 ### Performance
 
 All timing studies were perfomed using the following software/hardware:
@@ -172,6 +182,8 @@ Including basic distance and bending constraints, we managed CPU frame rates upw
 
 [Graph]
 
+----------------
+
 ### Additional Features
 
 #### GLTF 2.0 Mesh Support
@@ -188,9 +200,24 @@ Our Constraints also work on custom meshes. We also built a vertex aliasing tech
 | Distance Constraint = 0.9 | Distance Constraint = 0.6 |
 | Bending Constraint = 0.6 | Bending Constraint = 0.1 |
 
+
+
+#### Rendering Pipeline using PBR Shading
+
+| Albedo   | Normals   | Roughness   | AO   |
+|:-------------:|:-------------:|:-------------:|:-------------:|
+| ![](images/ClothDiffuse.PNG) | ![](images/ClothNormal.PNG) | ![](images/ClothRoughness.PNG) | ![](images/ClothAO.PNG) |
+
+| Final Frame |
+|:----:|
+| ![](images/ClothAll.PNG) |
+
 #### Meme Generator
 
 We've added a toggleable meme generator. Results are shown below.
+
+
+----------------
 
 ### References
 
