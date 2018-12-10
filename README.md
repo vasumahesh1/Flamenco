@@ -7,21 +7,31 @@ Flamenco is a GPU position-based dynamics (PBD) cloth simulation sufficiently fa
 
 ![gif](gifs/default_cloth_30x30_(0.8-0.7-0.3).gif)
 
+----------------
+
 ### Build Instructions and Links
 
 This repository is a placeholder for the Project. You can track this progress by going to (any of the following links):
 
 - [GPU Cloth Sim Issue Tracker: Issue #47](https://github.com/vasumahesh1/azura/issues/47)
 - [CPU Cloth Sim Issue Tracker: Issue #46](https://github.com/vasumahesh1/azura/issues/46)
-- [Main Docs (Will be updated when complete)](https://vasumahesh1.github.io/azura_docs/)
 
 The issue tracker has screenshots reporting progress. All commits related to them are tagged as "Issue #XYZ" format.
 
-This project builds online as we commit to it. The latest build can be run and is available at [Appveyor](https://ci.appveyor.com/project/vasumahesh1/azura/history). Check for the latest master build with `WIN64_RELEASE` tag and download the `3_ClothSim` zipped executable.
+This project builds online as we commit to it. The latest build can be run and is available at [Appveyor](https://ci.appveyor.com/project/vasumahesh1/azura/history). 
 
 [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/github/vasumahesh1/azura)](https://ci.appveyor.com/project/vasumahesh1/azura)
 
-This will download all the necessary config / logging / shaders / textures etc. to run the application, all as one zip.
+**Build #241:**
+[Cloth Sim Executable Build #241 (http://bit.ly/azura_cloth_build_241)](http://bit.ly/azura_cloth_build_241)
+
+If this link is old, you can try out the latest build on Azura and check for the `WIN64_RELEASE` tag and download the `3_ClothSim` zipped executable.
+
+[Latest Azura Build](https://ci.appveyor.com/project/vasumahesh1/azura)
+
+These links will download all the necessary config / logging / shaders / textures etc. to run the application, all as one zip. Also, these executables are running at 120 FPS, so your VSync must be off. We were able to achieve around 480 FPS as well, but we locked it at 120 FPS such that older hardware can run them as well with the same weights / configs needed for the simulation.
+
+----------------
 
 ### Methodology
 
@@ -88,6 +98,9 @@ Every vertex position is checked to make sure it is outside the radius of the sp
 
 Every vertex position is checked to make sure it remains on the same side of the plane it was on in the previous time step. If not, the vertex is pushed back in the direction normal to the plane.
 
+![gif](gifs/cloth_collision.gif)  
+*Plane and Sphere SDF Cloth Collisions*
+
 #### Mesh Definition
 
 Mesh behavior is a function of the constraints applied to the mesh, and these in turn are a function of the mesh's topology. We observe behavioral differences depending on the choice of mesh discretization. We demonstrate two such discretization's below:
@@ -100,8 +113,10 @@ On the left, we've specified a topology that divides the mesh such that every in
 
 To implement naive self-collision constraint generation, every vertex must be checked against every triangle in the mesh. We accelerate this process by using an adaptive spatial hash grid to bin mesh vertices before constraint projection. We then compute the axis-aligned bounding box encapsulating each triangle and its projected displacement. Then, following Chris Lewin's prescription for predictive constraints (introduced at GDC 2018, see links below), we generate all self-collision constraints for the cloth. Predictive constraints guarantee that cloth vertices never pass through the mesh and are computationally expedient.
 
-![gif](gifs/default_twist_30x30_(0.8-0.7-0.3).gif)
+![gif](gifs/default_twist_30x30_(0.8-0.7-0.3).gif)  
 *Predictive Constraints Resolve Self-Collisions*
+
+----------------
 
 ### Implementation
 
@@ -149,6 +164,10 @@ Finally, the mesh is rendered as per the D3D12 API.
 
 [Graph]
 
+
+----------------
+
+
 ### Performance
 
 All timing studies were perfomed using the following software/hardware:
@@ -169,9 +188,43 @@ Including basic distance and bending constraints, we managed CPU frame rates upw
 
 [Graph]
 
+----------------
+
 ### Additional Features
 
+#### GLTF 2.0 Mesh Support
+
 Flamenco currently supports GLTF 2.0 mesh loading. However, GLTF meshes do not currently work with cloth self-collisions turned on. We are currently working to enable this feature.
+
+![gif](gifs/custom_cloth_mesh_1.gif)  
+*Flamenco Supports GLTF 2.0 Mesh Loading*
+
+Our Constraints also work on custom meshes. We also built a vertex aliasing technique that prevents duplicate vertices from being simulated by the core PBD algorithm.
+
+| ![gif](gifs/custom_cloth_mesh_0_9-0_6.gif) | ![gif](gifs/custom_cloth_mesh_0_6-0_1.gif) |
+| ---- | ---- |
+| Distance Constraint = 0.9 | Distance Constraint = 0.6 |
+| Bending Constraint = 0.6 | Bending Constraint = 0.1 |
+
+
+
+#### Rendering Pipeline using PBR Shading
+
+| Albedo   | Normals   | Roughness   | AO   |
+|:-------------:|:-------------:|:-------------:|:-------------:|
+| ![](images/ClothDiffuse.PNG) | ![](images/ClothNormal.PNG) | ![](images/ClothRoughness.PNG) | ![](images/ClothAO.PNG) |
+
+| Final Frame |
+|:----:|
+| ![](images/ClothAll.PNG) |
+
+#### Meme Generator
+
+We've added a toggleable meme generator. Results are shown below.
+
+![gif](gifs/default_shehzan_35x40_(0.8-0.7-0.3).gif)
+
+----------------
 
 ### References
 
@@ -180,7 +233,6 @@ Flamenco currently supports GLTF 2.0 mesh loading. However, GLTF meshes do not c
 3. Marco Fratarcangeli and Fabio Pellacini, [A GPU-Based Implementation of Position Based Dynamics for Interactive Deformable Bodies](http://publications.lib.chalmers.se/records/fulltext/219708/local_219708.pdf)
 4. Matthias Müller, Bruno Heidelberger, Marcus Hennix, and John Ratcliff, [Position Based Dynamics](http://matthias-mueller-fischer.ch/publications/posBasedDyn.pdf)
 5. Matthias Teschner, Bruno Heidelberger, Matthias Müller, Danat Pomeranets, and Markus Gross, [Optimized Spatial Hashing for Collision Detection of Deformable Objects](http://matthias-mueller-fischer.ch/publications/tetraederCollision.pdf)
-
 
 ### Made by:
 
