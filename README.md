@@ -113,8 +113,9 @@ On the left, we've specified a topology that divides the mesh such that every in
 
 #### Spatial Hashing with Predictive Constraints for Self-Collisions
 
-To implement naive self-collision constraint generation, every vertex must be checked against every triangle in the mesh. We accelerate this process by using an adaptive spatial hash grid to bin mesh vertices before constraint projection. We then compute the axis-aligned bounding box encapsulating each triangle and its projected displacement. Then, following Chris Lewin's prescription for predictive constraints (introduced at GDC 2018, see links below), we generate all self-collision constraints for the cloth. Predictive constraints guarantee that cloth vertices never pass through the mesh and are computationally expedient.
+To implement naive self-collision constraint generation, every vertex must be checked against every triangle in the mesh. We accelerate this process by using an adaptive spatial hash grid to bin mesh vertices before constraint projection. We then compute the axis-aligned bounding box encapsulating each triangle and its projected displacement. Then, following Chris Lewin's [2] prescription for predictive constraints (introduced at GDC 2018, see links below), we generate all self-collision constraints for the cloth. Predictive constraints are computationally expedient and guarantee that cloth vertices never pass through the mesh.
 
+*Modified Spatial Hash Grid for Predictive Constraints (adapted from [5])*
 <img src="images/spatial_grid.JPG" alt="Modified Spatial Hash Grid" width="500"/>
 
 ![gif](gifs/default_twist_30x30_(0.8-0.7-0.3).gif)  
@@ -140,7 +141,7 @@ Here, all cloth vertices are binned into their appropriate hash grid cells.
 
 #### Generate Self-Collision Constraints
 
-We calculate the axis-aligned bounding box encapsulating each triangle and its projected displaced location and check all hash grid cells this box intersects. We then compare the projected positions of vertices binned in these cells with the barycentric-interpolated time-projected position of this vertex's spatially-projected position on the triangle in consideration. If these predictive measurements indicate a collision, a predictive constraint is generated using a normal triangle-point collision constraint that is evaluated in the triangle-point pair's pre-projected frame.
+We calculate the axis-aligned bounding box encapsulating each triangle and its projected displaced location and check all hash grid cells this box intersects. We then compare the projected positions of vertices binned in these cells with the barycentric-interpolated time-projected position of this vertex's spatially-projected position on the triangle in consideration. If these predictive measurements indicate a collision is imminent, a predictive constraint is generated using a normal triangle-point collision constraint that is evaluated in the triangle-point pair's pre-projected frame.
 
 #### Apply Vertex Constraints
 
@@ -148,7 +149,7 @@ Here, all constraints are evaluated in parallel, including the self-collision co
 
 #### Apply Deltas
 
-We keep track of the total displacement of each vertex as well as the number of constraints that have affected each vertex. We then average these displacements by dividing by the number of constraints affecting each vertex. This is essential process in a Jacobi-style solver. Finally, we resolve all SDF environment collisions here.
+We keep track of the total displacement of each vertex as well as the number of constraints that have affected each vertex. We then average these displacements by dividing by the number of constraints affecting each vertex. This is the essential process in a Jacobi-style solver. Finally, we resolve all SDF environment collisions here.
 
 #### Compute Vertex Positions
 
@@ -165,6 +166,8 @@ This shader computes mesh normals for lighting and normal maps.
 Finally, the mesh is rendered as per the D3D12 API.
 
 #### Frame Timing Breakdown
+
+On the left we break down each frame's total compute time into its constituent components for various square cloth mesh resolutions. On the right we show the percentage of total time (in ms) each compute shader takes for various mesh resolutions in a given frame. We see here that total compute time increases exponentially with mesh resolution, and that the bulk of this time regardless of mesh resolution is spent generating self-collision constraints and applying all constraints to the cloth mesh. The graph on the right demonstrates that self-collision time is minimized for a mesh resolution of 100 x 100. In this case, the time spent generating self-collision constraints is equal to the time spent applying all constraints. As expected, for higher mesh resolutions, self-collision compute time increases faster than all other compute passes. This fact highlights the importance of our spatial hashing acceleration step, as well as the utility of predictive constraints.
 
 <img src="graphs/compute_time_bar.png" alt="Compute Time Breakdown" width="400"/> <img src="graphs/percent_breakdown.png" alt="Compute Percentage Breakdown" width="400"/>
 
@@ -185,6 +188,8 @@ GPU: NVIDIA RTX 2080
 Including basic distance and bending constraints, we managed CPU frame rates upwards of 20 FPS. For a cloth model of equal complexity, we observe frame rates upwards of 400 FPS.
 
 #### Mesh Resolution vs Compute Time
+
+As noted previously, compute time increases exponentially with increased mesh resolutions (lower is better).
 
 ![](graphs/compute_time_line.png)
 
