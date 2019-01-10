@@ -9,6 +9,11 @@ Flamenco
   * [LinkedIn](https://www.linkedin.com/in/wzcorse/)
   * [Personal Website](https://wzcorse.com)
 
+
+## Click [here](https://vasumahesh1.github.io/azura/html/Projects/cloth-sim.html) for latest updated documentation.
+This documentation is no longer maintained. Use the link above for the latest documentation on this project.
+
+
 ### Description
 
 Flamenco is a GPU position-based dynamics (PBD) cloth simulation sufficiently fast and robust for use in games. Our take on this well-studied problem is an amalgam of some of the industry's best PBD cloth methods, some dating back as far as 2003, some recently communicated in GDC 2018, all mixed and ported to the GPU. By parallelizing these methods on the GPU, we achieve frame rates far higher than their CPU-based counterparts, and easily satisfy the game industry's 60 fps standard.
